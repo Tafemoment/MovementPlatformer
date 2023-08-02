@@ -6,7 +6,10 @@ public class PlayerMovement : MonoBehaviour
 {
     Rigidbody2D _playerRB;
     //RB for rigidbody
-    bool isJumpInput = false;
+    bool _isJumpInput = false;
+    bool _isGrounded = false;
+    bool _notJumped = false;
+
     void Start()
     {
         _playerRB = GetComponent<Rigidbody2D>();
@@ -16,7 +19,7 @@ public class PlayerMovement : MonoBehaviour
         //Getting input from the keyboard
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            isJumpInput = true;
+            _isJumpInput = true;
             /*Rigidbody2D playerRB = GetComponent<Rigidbody2D>();
 
             playerRB.AddForce(Vector2.up * 1200f);*/
@@ -26,11 +29,11 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (isJumpInput)
+        if (_isJumpInput && (_notJumped || _isGrounded))
         {
-            _playerRB.AddForce(Vector2.up * 200f);
-            isJumpInput = false;
+            _playerRB.AddForce(Vector2.up * 400f);
         }
+            _isJumpInput = false;
         if (Input.GetKey(KeyCode.A))
         {
             _playerRB.AddForce(Vector2.left * 1200f * Time.deltaTime);
@@ -39,5 +42,16 @@ public class PlayerMovement : MonoBehaviour
         {
             _playerRB.AddForce(Vector2.right * 1200f * Time.deltaTime);
         }
+
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        _isGrounded = true;
+        _notJumped = false;
+    }
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        _isGrounded = false;
     }
 }
