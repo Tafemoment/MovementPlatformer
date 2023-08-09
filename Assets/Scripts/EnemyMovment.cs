@@ -7,6 +7,9 @@ public class EnemyMovment : MonoBehaviour
 {
     public float speed;
     public bool isMovingRight = true;
+
+    public float leftBoundry;
+    public float rightBoundry;
     void Start()
     {
         

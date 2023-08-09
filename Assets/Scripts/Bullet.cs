@@ -6,10 +6,8 @@ public class Bullet : MonoBehaviour
 {
 
     public float Speed = 10f;
-    void Start()
-    {
-        
-    }
+    public int Damage = 50;
+   
 
     void Update()
     {
